@@ -14,11 +14,12 @@ library(tidyverse)
 print("list of loaded packages: ")
 print((.packages()))
 
-#tom epa windows
+# map root directory to machine
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){
   gbm_root <- file.path("c:", "git", "glinski_bee_matrices")
-}
-if(Sys.info()[4]=="LZ2626UTPURUCKE"){
+}else if(Sys.info()[4]=="Stevens-Mac-Pro.local") {
+  gbm_root <- file.path("~", "git", "glinski_bee_matrices")
+}else if(Sys.info()[4]=="LZ2626UTPURUCKE"){
   gbm_root <- file.path("c:","git","glinski_bee_matrices")
 }
 
@@ -27,6 +28,8 @@ print(paste("Root directory location: ", gbm_root, sep=""))
 gbm_data_in <- file.path(gbm_root, "data_in")
 gbm_graphics <- file.path(gbm_root, "graphics")
 gbm_src <- file.path(gbm_root, "src")
+
+# reduced the bee data by detected in at least 2 media
 
 #check to see if directories are accessible
 boo = file.exists(file.path(gbm_data_in,"glinski_bee_matrix_data_reduced.csv"))

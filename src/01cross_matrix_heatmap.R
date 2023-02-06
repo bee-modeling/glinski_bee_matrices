@@ -9,7 +9,7 @@ gbm_mean_concs <- gbm_data %>%
   summarise(across(everything(), 
                    mean,
                    na.rm = TRUE))
-View(gbm_mean_concs)
+# View(gbm_mean_concs)
 dim(gbm_mean_concs)
 #media
 media_names <- gbm_mean_concs$Media
@@ -59,6 +59,10 @@ data_min <- min(gbm_heatmap_data_all_ag, na.rm=T)
 gbm_heatmap_data_all_ag <- gbm_heatmap_data_all_ag %>% mutate_all(~ifelse(is.nan(.), data_min, .))
 gbm_heatmap_data_all_ag <- gbm_heatmap_data_all_ag %>% mutate_all(~ifelse(is.na(.), data_min, .))
 #View(gbm_heatmap_data_all)
+
+# export gbm_heatmap_data_all_ag so the chemicals can be tagged with herbicide, insecticide, miticide, and fungicide
+# also drop those chemicals that don't have > 10% detects in 2 or more media
+
 
 gbm_heatmap_all_ag <- pheatmap(log(gbm_heatmap_data_all_ag))
 gbm_heatmap_all_ag
