@@ -1,3 +1,4 @@
+View(gbm_data)
 dim(gbm_data)
 colnames(gbm_data)
 gbm_data$Media
@@ -6,6 +7,7 @@ chemical_names <- colnames(gbm_data)[7:35]
 chemical_names
 
 #### all data together
+# proxy values for nondetects?
 gbm_mean_concs <- gbm_data %>%
   group_by(Media) %>%
   select(where(is.numeric)) %>%
