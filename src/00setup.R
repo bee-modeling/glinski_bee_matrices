@@ -53,3 +53,7 @@ class(gbm_data$Sample.ID)
 unique(gbm_data$Sample.ID)
 
 #View(gbm_data)
+
+# pesticide key for figures
+pesticide_key <- read.csv(file.path(gbm_data_in,"pesticide_key.csv"), stringsAsFactors = TRUE)
+dim(pesticide_key)
