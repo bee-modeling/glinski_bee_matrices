@@ -9,6 +9,7 @@ library(ggpubr)
 library(reshape2)
 library(pheatmap)
 library(tidyverse)
+library(ggrepel)
 
 
 print("list of loaded packages: ")
@@ -57,3 +58,4 @@ unique(gbm_data$Sample.ID)
 # pesticide key for figures
 pesticide_key <- read.csv(file.path(gbm_data_in,"pesticide_key.csv"), stringsAsFactors = TRUE)
 dim(pesticide_key)
+
