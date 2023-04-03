@@ -10,6 +10,7 @@ library(reshape2)
 library(pheatmap)
 library(tidyverse)
 library(ggrepel)
+library(ggplotify)
 
 
 print("list of loaded packages: ")

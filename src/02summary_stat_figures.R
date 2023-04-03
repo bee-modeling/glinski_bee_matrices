@@ -24,12 +24,13 @@ rownames(gbm_summary_data)
 gbm_summary_data2 <- gbm_summary_data[order(gbm_summary_data$pesticide),]
 
 dim(pesticide_key)
+colnames(pesticide_key)
 pesticide_key$pesticide
 colnames(pesticide_key)
 pesticide_key$pesticide==gbm_summary_data2$pesticide
 #gbm_summary_data2$pesticide[7]
 #pesticide_key$pesticide[7]
-gbm_summary_data3 <- merge(pesticide_key, gbm_summary_data2, by = "pesticide")
+#gbm_summary_data3 <- merge(pesticide_key, gbm_summary_data2, by = "pesticide")
 #View(gbm_summary_data3)
 
 # combine concentration estimates and detection frequencies to make summary plots
@@ -44,7 +45,8 @@ gbm_mean_concs_tall
 colnames(gbm_mean_concs_tall)
 
 dim(gbm_det_freq)
-colnames(gbm_det_freq)
+gbm_det_freq$Media
+colnames(gbm_det_freq)[[1]]
 gbm_det_freq2 <- gbm_det_freq[,-c(2:3)]
 colnames(gbm_det_freq2)
 gbm_det_freq_tall <- gbm_det_freq2 %>%
@@ -80,10 +82,13 @@ class(gbm_data_summary_plot$pest_type)
 #drop chemical labels when log(conc) <0.25 and det_freq <0.25 
 gbm_data_summary_plot$chemical_plot <- gbm_data_summary_plot$chemical
 
+colnames(gbm_data_summary_plot)
+gbm_data_summary_plot$Media
+
 # ggplot
 gbm_summary_plot_all <- ggplot(gbm_data_summary_plot, aes(x = det_freq, y = log(mean), color = pest_type, shape=Media)) +
   geom_point(size=2.5) +
-  labs(x = "Detection Frequency (proportion)", y = "log(Mean Concentration (mg/kg?))", color = "Media") +
+  labs(x = "Detection Frequency (proportion)", y = "log(Mean Concentration (ng/g))", color = "Media") +
   theme_classic() +
   theme(legend.position = "bottom")
   
@@ -97,18 +102,34 @@ dev.off()
 # drop some chemical names for the plot
 # drop if log(mean) < -2.5
 # drop if det_freq < 0.25
+gbm_data_summary_plot$chemical2 <- gbm_data_summary_plot$chemical
+gbm_data_summary_plot$chemical2
+plot_drop_these_labels <- intersect(which(log(gbm_data_summary_plot$mean)<=-2.5), which(gbm_data_summary_plot$det_freq<=0.25))
+plot_drop_these_labels
+gbm_data_summary_plot$chemical2[plot_drop_these_labels] <- ""
+gbm_data_summary_plot$chemical2
+
+colnames(gbm_data_summary_plot)
 
 
 gbm_summary_plot_matrices <- ggplot(gbm_data_summary_plot, aes(x = det_freq, y = log(mean), color = pest_type)) +
   geom_point(size=2.5) +
   #geom_text(aes(label = chemical), vjust = -1) +
-  geom_text_repel(aes(label = chemical), size = 2) +
-  labs(x = "Detection Frequency (proportion)", y = "log(Mean Concentration (mg/kg?))", color = "Media") +
+  geom_text_repel(aes(label = chemical2), size = 3) +
+  labs(x = "Detection Frequency (proportion)", y = "log(Mean Concentration (ng/g))", color = "Type") +
   facet_wrap(~ Media) +
   theme_classic() +
-  theme(legend.position = "none")
+  theme(legend.position = "top") 
+  #theme(
+  #legend.position = c(1, 1),
+  #legend.justification = c("center", "top"),
+  #legend.box.just = "center",
+  #legend.margin = margin(6, 6, 6, 6)
+  #)
 gbm_summary_plot_matrices
 gbm_summary_plot_matrices_filename <- paste(gbm_graphics,"/gbm_summary_plot_matrices.jpg",sep="")
 jpeg(gbm_summary_plot_matrices_filename, width = 8, height = 6, units = "in",res=600)
   gbm_summary_plot_matrices
 dev.off()
+
+

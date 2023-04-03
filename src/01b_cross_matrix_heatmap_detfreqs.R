@@ -1,6 +1,8 @@
 #### all data together
 dim(gbm_data)
 colnames(gbm_data)
+
+# convert matrix to binary
 gbm_data_binary <- gbm_data %>%
   group_by(Media) %>%
   #select(where(is.numeric)) %>%
@@ -9,6 +11,9 @@ gbm_data_binary <- gbm_data %>%
 #summarise(across(everything(), 
 #                 mean,
 #                 na.rm = TRUE))
+colnames(gbm_data_binary)
+#View(gbm_data_binary)
+
 gbm_det_freqs
 
 vars_to_process <- unlist(colnames(gbm_data)[7:35], recursive=F)
@@ -63,21 +68,60 @@ gbm_heatmap_detfreq
 
 gbm_heatmap_detfreq_filename <- paste(gbm_graphics,"/gbm_heatmap_detfreq.jpg",sep="")
 jpeg(gbm_heatmap_detfreq_filename, width = 4, height = 7, units = "in",res=600)
-gbm_heatmap_detfreq
+  gbm_heatmap_detfreq
 dev.off()
 
 #### split data into high and low ag cover sample sets
-gbm_data_binary_ag <- gbm_data %>%
+View(gbm_data_binary2)
+gbm_data_binary_ag <- gbm_data_binary2 %>%
   group_by(Media, ag_cover) %>%
   select(where(is.numeric)) %>%
   summarise(across(everything(), 
                    mean,
                    na.rm = TRUE))
 
+View(gbm_data_binary_ag)
 dim(gbm_data)
 dim(gbm_data_binary_ag)
-View(gbm_data_binary)
-colnames(gbm_data_binary_ag)
 
-gbm_data_binary2 <- gbm_data_binary[,-c(7:35)]
-colnames(gbm_data_binary2)[7:35] <- chemical_names
+#media
+media_names_binary_ag <- paste0(gbm_data_binary_ag$Media,"_",gbm_data_binary_ag$ag_cover)
+media_names_binary_ag
+
+#View(gbm_data_binary_ag)
+colnames(gbm_data_binary_ag)
+gbm_heatmap_detfreq_all_ag <- as.data.frame(t(gbm_data_binary_ag[,5:33]))
+dim(gbm_heatmap_detfreq_all_ag)
+colnames(gbm_heatmap_detfreq_all_ag) <- media_names_ag
+colnames(gbm_heatmap_detfreq_all_ag)
+#View(gbm_heatmap_detfreq_all_ag)
+
+
+# this might be useful elsewhere? but orphaned here
+#View(gbm_data_binary)
+#colnames(gbm_data_binary_ag)
+#gbm_data_binary2 <- gbm_data_binary[,-c(7:35)]
+#colnames(gbm_data_binary2)[7:35] <- chemical_names
+#data_min <- min(gbm_heatmap_data_all_ag, na.rm=T)
+
+#replace NaNs with NAs
+gbm_heatmap_detfreq_all_ag <- gbm_heatmap_detfreq_all_ag %>% mutate_all(~ifelse(is.nan(.), 0, .))
+gbm_heatmap_detfreq_all_ag <- gbm_heatmap_detfreq_all_ag %>% mutate_all(~ifelse(is.na(.), 0, .))
+max(gbm_heatmap_detfreq_all_ag)
+#View(gbm_heatmap_detfreq_all_ag)
+
+# export gbm_heatmap_data_all_ag so the chemicals can be tagged with herbicide, insecticide, miticide, and fungicide
+# also drop those chemicals that don't have > 10% detects in 2 or more media
+
+
+gbm_heatmap_detfreqall_ag <- pheatmap(gbm_heatmap_detfreq_all_ag)
+gbm_heatmap_detfreqall_ag
+
+gbm_heatmap_detfreq_ag_filename <- paste(gbm_graphics,"/gbm_heatmap_detfreq_ag_split.jpg",sep="")
+jpeg(gbm_heatmap_detfreq_ag_filename, width = 7, height = 7, units = "in",res=600)
+  gbm_heatmap_detfreqall_ag
+dev.off()
+
+
+gg_gbm_heatmap_detfreqall_ag <- as.ggplot(pheatmap(gbm_heatmap_detfreq_all_ag))
+

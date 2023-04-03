@@ -1,4 +1,4 @@
-View(gbm_data)
+#View(gbm_data)
 dim(gbm_data)
 colnames(gbm_data)
 gbm_data$Media
@@ -56,7 +56,7 @@ media_names_ag
 gbm_heatmap_data_all_ag <- as.data.frame(t(gbm_mean_concs_ag[,5:33]))
 dim(gbm_heatmap_data_all_ag)
 colnames(gbm_heatmap_data_all_ag) <- media_names_ag
-View(gbm_heatmap_data_all_ag)
+#View(gbm_heatmap_data_all_ag)
 
 data_min <- min(gbm_heatmap_data_all_ag, na.rm=T)
 
@@ -77,4 +77,5 @@ jpeg(gbm_heatmap_ag_filename, width = 7, height = 7, units = "in",res=600)
   gbm_heatmap_all_ag
 dev.off()
 
-
+gg_gbm_heatmap_all_ag <- as.ggplot(pheatmap(log(gbm_heatmap_data_all_ag)), legend_side="bottom")
+gg_gbm_heatmap_all_ag
