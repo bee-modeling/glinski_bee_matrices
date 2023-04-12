@@ -49,6 +49,8 @@ gbm_mean_concs_ag <- gbm_data %>%
                    na.rm = TRUE))
 View(gbm_mean_concs_ag)
 dim(gbm_mean_concs_ag)
+colnames(gbm_mean_concs_ag)
+rownames(gbm_mean_concs_ag)
 #media
 media_names_ag <- paste0(gbm_mean_concs_ag$Media,"_",gbm_mean_concs_ag$ag_cover)
 media_names_ag

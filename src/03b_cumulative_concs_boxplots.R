@@ -1,0 +1,57 @@
+# convert data set to nondetect/detect binary
+View(gbm_data)
+unique(gbm_data$Date)
+
+#assume that lowest concentration observed is the detection limit (per DAG)
+# anything greater than the lowest concentration is a detect
+colnames(gbm_data)
+cols_to_convert <- 6:34 # not 7:35 because of group command
+gbm_concs_withNAs <- gbm_data %>%
+  group_by(Media) %>%
+  mutate(across(all_of(cols_to_convert), ~ifelse(. == min(., na.rm=T), ./(sqrt(2)), .))) %>%
+  ungroup()
+dim(gbm_concs_withNAs)
+
+# Convert NA values to 0s using mutate()
+# should do this by columns and set to min of the column
+gbm_concs <- gbm_concs_withNAs %>% mutate(across(everything(), ~ifelse(is.na(.), 0, .)))
+# fix.restore the factors
+gbm_concs[,1:6] <- gbm_data[,1:6]
+View(gbm_concs)
+
+#now sum the number of detects in each sample in each media
+gbm_concs_sum <- gbm_concs %>%
+  #group_by(group) %>%
+  mutate(concs_sum = rowSums(.[7:35]))
+
+View(gbm_concs_sum)
+
+# reorder the ac_cover order so low is first
+levels(gbm_concs_sum$ag_cover)
+gbm_concs_sum$ag_cover <- factor(gbm_concs_sum$ag_cover, levels=c("low", "high"))
+
+#this is the one for the manuscript
+dim(gbm_concs_sum)
+boxplots_concs_sum <- ggplot(gbm_concs_sum, aes(x = log(concs_sum), fill = ag_cover)) + 
+  geom_boxplot(position="dodge") +
+  facet_wrap(~Media, ncol=1) +# group by factor and wrap plots in a grid
+  coord_flip() +
+  theme_classic()
+boxplots_concs_sum
+
+#figure by date
+unique(gbm_concs_sum$Date)
+gbm_concs_sum$concs_sum
+#summarize n_detects by Meda and Date
+
+gbm_concs_means <- gbm_concs_sum %>% 
+  group_by(Media, Date) %>% 
+  summarize(mean_concs = mean(concs_sum))
+gbm_concs_means
+
+# Create the scatterplot
+ggplot(gbm_concs_means, aes(x = Date, y = mean_concs, color = Media)) +
+  geom_point() + # add points
+  theme_classic()
+#scale_x_date(date_breaks = "1 week", date_labels = "%b %d") + # format x-axis as dates
+#facet_wrap(~Media, ncol = 3) # group by factor and wrap plots in a grid

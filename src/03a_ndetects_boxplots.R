@@ -81,6 +81,20 @@ ggplot(gbm_binary_sum, aes(x = det_prop, fill = Media)) +
   geom_density(alpha = 0.5) +
   theme_classic()
 
+# reorder the ac_cover order so low is first
+levels(gbm_binary_sum$ag_cover)
+gbm_binary_sum$ag_cover <- factor(gbm_binary_sum$ag_cover, levels=c("low", "high"))
+
+#this is the one for the manuscript
+dim(gbm_binary_sum)
+boxplots_ndetects <- ggplot(gbm_binary_sum, aes(x = n_detects, fill = ag_cover)) + 
+  geom_boxplot(position="dodge") +
+  facet_wrap(~Media, ncol=1) +# group by factor and wrap plots in a grid
+  coord_flip() +
+  theme_classic()
+boxplots_ndetects
+
+
 
 #figure by date
 unique(gbm_binary_sum$Date)
@@ -94,7 +108,9 @@ gbm_ndet_means
 
 # Create the scatterplot
 ggplot(gbm_ndet_means, aes(x = Date, y = mean_ndets, color = Media)) +
-  geom_line() + # add points
+  geom_point() + # add points
   theme_classic()
   #scale_x_date(date_breaks = "1 week", date_labels = "%b %d") + # format x-axis as dates
   #facet_wrap(~Media, ncol = 3) # group by factor and wrap plots in a grid
+
+
