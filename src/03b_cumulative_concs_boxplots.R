@@ -48,10 +48,35 @@ gbm_concs_means <- gbm_concs_sum %>%
   group_by(Media, Date) %>% 
   summarize(mean_concs = mean(concs_sum))
 gbm_concs_means
+hist(gbm_concs_means$Date)
+
+#wrong approach, convert as month-day
+gbm_concs_means$Date2 <- paste("0",as.character(gbm_concs_means$Date),sep="")
+gbm_concs_means$Date2 <- as.Date(gbm_concs_means$Date2, "%m%d")
+
+max(gbm_concs_means$mean_concs)
 
 # Create the scatterplot
-ggplot(gbm_concs_means, aes(x = Date, y = mean_concs, color = Media)) +
-  geom_point() + # add points
+media_means_plot <- ggplot(gbm_concs_means, aes(x = Date2, y = mean_concs, group=Media, color = Media)) +
+  geom_line() + # add points
+  labs(x = "Date", y = "Mean Concentration (ng/g)") +
+  scale_x_date(date_breaks = "weeks" , date_labels = "%b-%d") +
   theme_classic()
+media_means_plot
 #scale_x_date(date_breaks = "1 week", date_labels = "%b %d") + # format x-axis as dates
 #facet_wrap(~Media, ncol = 3) # group by factor and wrap plots in a grid
+
+media_means_plot_log <- ggplot(gbm_concs_means, aes(x = Date2, y = log(mean_concs), group=Media, color = Media)) +
+  geom_line() + # add points
+  labs(x = "Date", y = "log(Mean Concentration (ng/g))") +
+  scale_x_date(date_breaks = "weeks" , date_labels = "%b-%d") +
+  theme_classic()
+media_means_plot_log
+
+gbm_media_means_filename <- paste(gbm_graphics,"/gbm_media_means.jpg",sep="")
+jpeg(gbm_media_means_filename, width = 7, height = 5, units = "in",res=600)
+  media_means_plot
+dev.off()
+
+
+# time series test
