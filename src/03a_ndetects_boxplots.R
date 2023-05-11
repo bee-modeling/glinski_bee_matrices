@@ -99,7 +99,7 @@ boxplots_ndetects <- ggplot(gbm_binary_sum, aes(x = n_detects, fill = ag_cover))
   facet_wrap(~Media, ncol=1) +# group by factor and wrap plots in a grid
   labs(x = "# of detects") + # , color = "Media"
   coord_flip() +
-  theme_classic() +
+  theme_classic_custom() + # defined in a different scrip--05b
   theme(legend.position="none")
 boxplots_ndetects
 

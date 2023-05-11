@@ -48,7 +48,7 @@ boxplots_concs_sum <- ggplot(gbm_concs_sum, aes(x = log(concs_sum), fill = ag_co
   facet_wrap(~Media, ncol=1) +# group by factor and wrap plots in a grid
   labs(x = "log(sum(Mean Concentration (ng/g)))") + #, color = "Media"
   coord_flip() +
-  theme_classic()
+  theme_classic_custom() # defined in a different scrip--05b
 boxplots_concs_sum
 
 gbm_sumconcs_agcover_filename <- paste(gbm_graphics,"/gbm_sumconcs_agcover.jpg",sep="")
