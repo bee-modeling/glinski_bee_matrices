@@ -30,14 +30,31 @@ View(gbm_concs_sum)
 levels(gbm_concs_sum$ag_cover)
 gbm_concs_sum$ag_cover <- factor(gbm_concs_sum$ag_cover, levels=c("low", "high"))
 
+# reorder Media factor to match text
+unique(gbm_concs_sum$Media)
+levels(gbm_concs_sum$Media)
+new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
+gbm_concs_sum$Media <- factor(gbm_concs_sum$Media, levels = new_media_types)
+levels(gbm_concs_sum$Media)
+
+# reorder the ac_cover order so low is first
+levels(gbm_concs_sum$ag_cover)
+gbm_concs_sum$ag_cover <- factor(gbm_concs_sum$ag_cover, levels=c("low", "high"))
+
 #this is the one for the manuscript
 dim(gbm_concs_sum)
 boxplots_concs_sum <- ggplot(gbm_concs_sum, aes(x = log(concs_sum), fill = ag_cover)) + 
   geom_boxplot(position="dodge") +
   facet_wrap(~Media, ncol=1) +# group by factor and wrap plots in a grid
+  labs(x = "log(sum(Mean Concentration (ng/g)))") + #, color = "Media"
   coord_flip() +
   theme_classic()
 boxplots_concs_sum
+
+gbm_sumconcs_agcover_filename <- paste(gbm_graphics,"/gbm_sumconcs_agcover.jpg",sep="")
+jpeg(gbm_sumconcs_agcover_filename, width = 4, height = 8, units = "in",res=600)
+  boxplots_concs_sum
+dev.off()
 
 #figure by date
 unique(gbm_concs_sum$Date)
@@ -55,6 +72,14 @@ gbm_concs_means$Date2 <- paste("0",as.character(gbm_concs_means$Date),sep="")
 gbm_concs_means$Date2 <- as.Date(gbm_concs_means$Date2, "%m%d")
 
 max(gbm_concs_means$mean_concs)
+
+
+# reorder Media factor to match text
+unique(gbm_concs_means$Media)
+levels(gbm_concs_means$Media)
+new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
+gbm_concs_means$Media <- factor(gbm_concs_means$Media, levels = new_media_types)
+levels(gbm_concs_means$Media)
 
 # Create the scatterplot
 media_means_plot <- ggplot(gbm_concs_means, aes(x = Date2, y = mean_concs, group=Media, color = Media)) +

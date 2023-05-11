@@ -85,15 +85,28 @@ ggplot(gbm_binary_sum, aes(x = det_prop, fill = Media)) +
 levels(gbm_binary_sum$ag_cover)
 gbm_binary_sum$ag_cover <- factor(gbm_binary_sum$ag_cover, levels=c("low", "high"))
 
+# reorder Media factor to match text
+unique(gbm_binary_sum$Media)
+levels(gbm_binary_sum$Media)
+new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
+gbm_binary_sum$Media <- factor(gbm_binary_sum$Media, levels = new_media_types)
+levels(gbm_binary_sum$Media)
+
 #this is the one for the manuscript
 dim(gbm_binary_sum)
 boxplots_ndetects <- ggplot(gbm_binary_sum, aes(x = n_detects, fill = ag_cover)) + 
   geom_boxplot(position="dodge") +
   facet_wrap(~Media, ncol=1) +# group by factor and wrap plots in a grid
+  labs(x = "# of detects") + # , color = "Media"
   coord_flip() +
-  theme_classic()
+  theme_classic() +
+  theme(legend.position="none")
 boxplots_ndetects
 
+gbm_ndetects_agcover_filename <- paste(gbm_graphics,"/gbm_ndetects_agcover.jpg",sep="")
+jpeg(gbm_ndetects_agcover_filename, width = 4, height = 8, units = "in",res=600)
+  boxplots_ndetects
+dev.off()
 
 
 #figure by date
