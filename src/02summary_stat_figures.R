@@ -110,13 +110,20 @@ gbm_data_summary_plot$chemical2[plot_drop_these_labels] <- ""
 gbm_data_summary_plot$chemical2
 
 colnames(gbm_data_summary_plot)
-
+gbm_data_summary_plot$chemical_text <- as.character(gbm_data_summary_plot$chemical2)
+gbm_data_summary_plot$chemical_text[gbm_data_summary_plot$chemical_text=='DMPF'] <- 'DMF'
+unique(gbm_data_summary_plot$chemical_text)
+gbm_data_summary_plot$chemical2 <- as.factor(gbm_data_summary_plot$chemical_text)
+levels(gbm_data_summary_plot$chemical2)
+unique(gbm_data_summary_plot$chemical2)
+gbm_data_summary_plot$Media <- factor(gbm_data_summary_plot$Media, levels = c('FP', 'DBT', 'IHNB', 'IHL', 'IHBB', 'IHH'))
 
 gbm_summary_plot_matrices <- ggplot(gbm_data_summary_plot, aes(x = det_freq, y = log(mean), color = pest_type)) +
   geom_point(size=2.5) +
   #geom_text(aes(label = chemical), vjust = -1) +
   geom_text_repel(aes(label = chemical2), size = 3) +
   labs(x = "Detection Frequency (proportion)", y = "log(Mean Concentration (ng/g))", color = "Type") +
+  #facet_grid(~factor(Media, levels=c('FP', 'DBT', 'IHNB', 'IHL', 'IHBB', 'IHH'))) + # change the order of the facet plots
   facet_wrap(~ Media) +
   theme_classic() +
   theme(legend.position = "top") 
@@ -127,6 +134,7 @@ gbm_summary_plot_matrices <- ggplot(gbm_data_summary_plot, aes(x = det_freq, y =
   #legend.margin = margin(6, 6, 6, 6)
   #)
 gbm_summary_plot_matrices
+
 gbm_summary_plot_matrices_filename <- paste(gbm_graphics,"/gbm_summary_plot_matrices.jpg",sep="")
 jpeg(gbm_summary_plot_matrices_filename, width = 8, height = 6, units = "in",res=600)
   gbm_summary_plot_matrices
