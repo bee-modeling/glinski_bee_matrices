@@ -42,7 +42,7 @@ gbm_data_binary  <- gbm_data %>%
 
 dim(gbm_data)
 dim(gbm_data_binary)
-View(gbm_data_binary)
+#View(gbm_data_binary)
 colnames(gbm_data_binary)
 
 gbm_data_binary2 <- gbm_data_binary[,-c(7:35)]
@@ -72,7 +72,7 @@ jpeg(gbm_heatmap_detfreq_filename, width = 4, height = 7, units = "in",res=600)
 dev.off()
 
 #### split data into high and low ag cover sample sets
-View(gbm_data_binary2)
+#View(gbm_data_binary2)
 gbm_data_binary_ag <- gbm_data_binary2 %>%
   group_by(Media, ag_cover) %>%
   select(where(is.numeric)) %>%
@@ -80,7 +80,7 @@ gbm_data_binary_ag <- gbm_data_binary2 %>%
                    mean,
                    na.rm = TRUE))
 
-View(gbm_data_binary_ag)
+#View(gbm_data_binary_ag)
 dim(gbm_data)
 dim(gbm_data_binary_ag)
 

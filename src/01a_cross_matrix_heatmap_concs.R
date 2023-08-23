@@ -47,7 +47,7 @@ gbm_mean_concs_ag <- gbm_data %>%
   summarise(across(everything(), 
                    mean,
                    na.rm = TRUE))
-View(gbm_mean_concs_ag)
+#View(gbm_mean_concs_ag)
 dim(gbm_mean_concs_ag)
 colnames(gbm_mean_concs_ag)
 rownames(gbm_mean_concs_ag)
@@ -81,3 +81,4 @@ dev.off()
 
 gg_gbm_heatmap_all_ag <- as.ggplot(pheatmap(log(gbm_heatmap_data_all_ag)), legend_side="bottom")
 gg_gbm_heatmap_all_ag
+
