@@ -23,6 +23,11 @@ if(Sys.info()[4]=="DZ2626UTPURUCKE"){
   gbm_root <- file.path("~", "git", "glinski_bee_matrices")
 }else if(Sys.info()[4]=="LZ2626UTPURUCKE"){
   gbm_root <- file.path("c:","git","glinski_bee_matrices")
+} else if (Sys.info()[4]=="LZ26TPURUCKE-2"){ 
+  # tom windows 2023 laptop
+  gbm_root <- file.path("c:", "Users", "tpurucke", "git", "glinski_bee_matrices")
+} else {
+  print("fix root directory")
 }
 
 print(paste("Root directory location: ", gbm_root, sep=""))
