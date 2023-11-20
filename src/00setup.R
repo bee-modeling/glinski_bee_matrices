@@ -65,3 +65,9 @@ unique(gbm_data$Sample.ID)
 pesticide_key <- read.csv(file.path(gbm_data_in,"pesticide_key.csv"), stringsAsFactors = TRUE)
 dim(pesticide_key)
 
+# run scripts
+source(file.path(gbm_src, "01a_cross_matrix_heatmap_concs.R"))
+source(file.path(gbm_src, "01b_cross_matrix_heatmap_detfreqs.R"))
+source(file.path(gbm_src, "01c_cross_matrix_stat_tests_detection_frequencies.R"))
+source(file.path(gbm_src, "02a_summary_stat_figures.R"))
+source(file.path(gbm_src, "02b_combined_manuscript_figure.R"))

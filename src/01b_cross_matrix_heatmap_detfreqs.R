@@ -14,7 +14,7 @@ gbm_data_binary <- gbm_data %>%
 colnames(gbm_data_binary)
 #View(gbm_data_binary)
 
-gbm_det_freqs
+# gbm_det_freqs
 
 vars_to_process <- unlist(colnames(gbm_data)[7:35], recursive=F)
 c(vars_to_process)

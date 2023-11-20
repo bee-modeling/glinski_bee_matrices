@@ -1,5 +1,5 @@
 gbm_data_binary_ag
-View(gbm_data_binary_ag)
+#View(gbm_data_binary_ag)
 colnames(gbm_data_binary_ag)
 
 # Wilcoxon signed rank test on detection frequencies for each media
