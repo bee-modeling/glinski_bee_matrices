@@ -1,5 +1,5 @@
 # convert data set to nondetect/detect binary
-View(gbm_data)
+#View(gbm_data)
 unique(gbm_data$Date)
 
 #assume that lowest concentration observed is the detection limit (per DAG)
@@ -17,14 +17,14 @@ dim(gbm_concs_withNAs)
 gbm_concs <- gbm_concs_withNAs %>% mutate(across(everything(), ~ifelse(is.na(.), 0, .)))
 # fix.restore the factors
 gbm_concs[,1:6] <- gbm_data[,1:6]
-View(gbm_concs)
+#View(gbm_concs)
 
 #now sum the number of detects in each sample in each media
 gbm_concs_sum <- gbm_concs %>%
   #group_by(group) %>%
   mutate(concs_sum = rowSums(.[7:35]))
 
-View(gbm_concs_sum)
+#View(gbm_concs_sum)
 
 # reorder the ac_cover order so low is first
 levels(gbm_concs_sum$ag_cover)

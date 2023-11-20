@@ -1,5 +1,5 @@
 # convert data set to nondetect/detect binary
-View(gbm_data)
+#View(gbm_data)
 unique(gbm_data$Date)
 
 #assume that lowest concentration observed is the detection limit (per DAG)
@@ -11,20 +11,20 @@ gbm_binary_withNAs <- gbm_data %>%
   mutate(across(all_of(cols_to_convert), ~ifelse(. == min(., na.rm=T), 0, 1))) %>%
   ungroup()
   
-View(gbm_binary_withNAs)
+#View(gbm_binary_withNAs)
   
 # Convert NA values to 0s using mutate()
 gbm_binary <- gbm_binary_withNAs %>% mutate(across(everything(), ~ifelse(is.na(.), 0, .)))
 # fix.restore the factors
 gbm_binary[,1:6] <- gbm_data[,1:6]
-View(gbm_binary)
+#View(gbm_binary)
 
 #now sum the number of detects in each sample in each media
 gbm_binary_sum <- gbm_binary %>%
   #group_by(group) %>%
   mutate(n_detects = rowSums(.[7:35]))
 
-View(gbm_binary_sum)
+#View(gbm_binary_sum)
 
 # frequency polygon
 ggplot(gbm_binary_sum, aes(x = n_detects, color = Media, fill = Media)) +
@@ -125,5 +125,3 @@ ggplot(gbm_ndet_means, aes(x = Date, y = mean_ndets, color = Media)) +
   theme_classic()
   #scale_x_date(date_breaks = "1 week", date_labels = "%b %d") + # format x-axis as dates
   #facet_wrap(~Media, ncol = 3) # group by factor and wrap plots in a grid
-
-

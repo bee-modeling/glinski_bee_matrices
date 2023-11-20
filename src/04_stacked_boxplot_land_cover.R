@@ -1,8 +1,3 @@
-# library
-library(ggplot2)
-library(viridis)
-library(hrbrthemes)
-
 # create a dataset
 ag_cover <- c(rep("soybean_corn" , 10) , rep("other_crop" , 10) , rep("green_space" , 10) , rep("developed" , 10) )
 
