@@ -1,3 +1,5 @@
+# this is figure 3 in the Glinski manuscript as of 12/11/2023
+
 boxplots_ndetects
 boxplots_concs_sum
 
@@ -10,7 +12,7 @@ agcover_boxplots_combined <- ggarrange(boxplots_ndetects, boxplots_concs_sum,
 
 agcover_boxplots_combined
 
-# save to file
+# this is figure 3 in the Glinski manuscript as of 12/11/2023
 gbm_agcover_boxplots_combined_filename <- paste(gbm_graphics,"/gbm_agcover_boxplots_combined.jpg",sep="")
 jpeg(gbm_agcover_boxplots_combined_filename, width = 5, height = 8, units = "in",res=600)
   agcover_boxplots_combined

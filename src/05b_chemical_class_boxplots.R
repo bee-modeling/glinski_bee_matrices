@@ -37,6 +37,7 @@ boxplots_chem_classes <- ggplot(gbm_boxplot_data_long, aes(x = log(value), fill 
   theme_classic_custom() 
 boxplots_chem_classes
 
+### this is figure 4 of the Glinski manuscript as of 12/11/2023
 gbm_boxplots_chem_classes_filename <- paste(gbm_graphics,"/gbm_boxplots_chem_classes.jpg",sep="")
 jpeg(gbm_boxplots_chem_classes_filename, width = 4, height = 7, units = "in",res=600)
   boxplots_chem_classes

@@ -25,6 +25,7 @@ land_cover_stacked <- ggplot(ag_cover_tall, aes(factor(location, levels = lvls),
 
 land_cover_stacked
 
+### this is Firgure 1B of the Glinski manuscript as of 12/11/2023
 gbm_land_cover_stacked_filename <- paste(gbm_graphics,"/gbm_land_cover_stacked.jpg",sep="")
 jpeg(gbm_land_cover_stacked_filename, width = 7, height = 5, units = "in",res=600)
   land_cover_stacked

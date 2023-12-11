@@ -1,3 +1,5 @@
+### this is glinski figure 2 as of 12/11/2023
+
 # convert data set to nondetect/detect binary
 #View(gbm_data)
 unique(gbm_data$Date)
@@ -32,8 +34,10 @@ gbm_concs_sum$ag_cover <- factor(gbm_concs_sum$ag_cover, levels=c("low", "high")
 
 # reorder Media factor to match text
 unique(gbm_concs_sum$Media)
+levels(gbm_concs_sum$Media) <- c("DBT (p=0.581)", "FP (p=0.251)", "IHBB (p=0.007)", "IHH (p=0.444)", "IHL (p=0.026)", "IHNB (p=0.202)")
 levels(gbm_concs_sum$Media)
-new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
+# new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
+new_media_types <- c("FP (p=0.251)", "DBT (p=0.581)", "IHNB (p=0.202)", "IHL (p=0.026)", "IHBB (p=0.007)", "IHH (p=0.444)")
 gbm_concs_sum$Media <- factor(gbm_concs_sum$Media, levels = new_media_types)
 levels(gbm_concs_sum$Media)
 
@@ -98,6 +102,7 @@ media_means_plot_log <- ggplot(gbm_concs_means, aes(x = Date2, y = log(mean_conc
   theme_classic()
 media_means_plot_log
 
+### this is glinski figure 2 as of 12/11/2023
 gbm_media_means_filename <- paste(gbm_graphics,"/gbm_media_means.jpg",sep="")
 jpeg(gbm_media_means_filename, width = 7, height = 5, units = "in",res=600)
   media_means_plot

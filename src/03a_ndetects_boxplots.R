@@ -87,13 +87,16 @@ gbm_binary_sum$ag_cover <- factor(gbm_binary_sum$ag_cover, levels=c("low", "high
 
 # reorder Media factor to match text
 unique(gbm_binary_sum$Media)
-levels(gbm_binary_sum$Media)
-new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
+levels(gbm_binary_sum$Media) <- c("DBT (p=0.384)", "FP (p=0.289)", "IHBB (p=0.053)", "IHH (p=0.39)", "IHL (p=0.71)", "IHNB (p=0.193)")
+new_media_types <- c("FP (p=0.289)", "DBT (p=0.384)", "IHNB (p=0.193)", "IHL (p=0.71)", "IHBB (p=0.053)", "IHH (p=0.39)")
+#new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
 gbm_binary_sum$Media <- factor(gbm_binary_sum$Media, levels = new_media_types)
 levels(gbm_binary_sum$Media)
+#View(gbm_binary_sum)
 
 #this is the one for the manuscript
 dim(gbm_binary_sum)
+colnames(gbm_binary_sum)
 boxplots_ndetects <- ggplot(gbm_binary_sum, aes(x = n_detects, fill = ag_cover)) + 
   geom_boxplot(position="dodge") +
   facet_wrap(~Media, ncol=1) +# group by factor and wrap plots in a grid

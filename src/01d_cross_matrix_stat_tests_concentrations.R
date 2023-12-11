@@ -71,11 +71,10 @@ wilcox.test(all_concs$high, all_concs$low, paired=TRUE, alternative = c("greater
 media_names <- c("All", "Dead bee traps", "Field pollen", "Inhive bee bread",
                  "Inhive honey", "Inhive larvae", "Inhive nurse bees")
 detfreq_p_values <- c(0.09, 0.384, 0.289, 0.053, 0.39, 0.71, 0.193)
-conc_p_values <- c(0.001, 0.581, 0.251, 0.007, 0.444, 0.026, 0.202)
+conc_p_values <- c(0.01, 0.581, 0.251, 0.007, 0.444, 0.026, 0.202)
 
 p_value_table <- tibble(Media = media_names, DetFreq = detfreq_p_values, Conc = conc_p_values)
 
-library(gt)
-
-p_value_table |> gt() |> tab_header(
+p_value_graphic <- p_value_table |> gt() |> tab_header(
   title = "WSR p values for high v low ag cover")
+p_value_graphic

@@ -1,4 +1,5 @@
-gbm_summary_plot_matrices
+## Glinski manuscript figure 5 on 12/13/2023
+
 gg_gbm_heatmap_all_ag
 gg_gbm_heatmap_detfreqall_ag
 
@@ -11,7 +12,7 @@ concs_dets_combined <- ggarrange(gbm_summary_plot_matrices,                     
 ) 
 concs_dets_combined
 
-
+## Glinski manuscript figure 5 on 12/13/2023
 gbm_concs_detects_filename <- paste(gbm_graphics,"/gbm_combined_concs_detects.jpg",sep="")
 jpeg(gbm_concs_detects_filename, width = 8.5, height = 11, units = "in",res=600)
   concs_dets_combined

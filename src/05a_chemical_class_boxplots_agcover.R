@@ -29,7 +29,7 @@ colnames(gbm_mean_concs_agcover2)
 gbm_mean_concs_agcover_long <- gbm_mean_concs_agcover2 %>%
   pivot_longer(cols=Alachlor:Thiacloprid, 
                names_to="chemical", values_to="value")
-
+dim(gbm_mean_concs_agcover_long)
 
 # merge to get pest_type
 gbm_boxplot_data_agcover <- merge(gbm_mean_concs_agcover_long, pesticide_key, by='chemical', all=T)
