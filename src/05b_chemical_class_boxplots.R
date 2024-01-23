@@ -1,4 +1,4 @@
-# creating boxplots of chemical class mean concentrations by nedia
+# creating boxplots of chemical class mean concentrations by media
 
 #View(gbm_heatmap_data_all)
 dim(gbm_heatmap_data_all)

@@ -1,3 +1,4 @@
+#View(gbm_heatmap_data_all_ag)
 gbm_heatmap_data_all_ag
 colnames(gbm_heatmap_data_all_ag)
 
