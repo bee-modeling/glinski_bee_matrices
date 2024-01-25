@@ -14,7 +14,12 @@ library(ggplotify)
 library(gt)
 library(viridis)
 library(hrbrthemes)
+library(effsize)
 # hrbrthemes::import_roboto_condensed() #install required fonts if NA
+library(circlize)
+library(devtools)
+install_github("jokergoo/ComplexHeatmap")
+library(ComplexHeatmap)
 
 print("list of loaded packages: ")
 print((.packages()))
