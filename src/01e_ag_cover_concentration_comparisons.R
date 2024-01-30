@@ -215,21 +215,48 @@ for(i in 7:35){
 }
 ihnb_agcover_tests
 
-cohen_d_ag_cover <- cbind(dbt_agcover_tests$cohens_d, 
+#create data frame with effects sizes by media and chemical
+cohen_d_agcover <- cbind(dbt_agcover_tests$cohens_d, 
                            fp_agcover_tests$cohens_d, 
                            ihbb_agcover_tests$cohens_d, 
                            ihh_agcover_tests$cohens_d, 
                            ihl_agcover_tests$cohens_d, 
                            ihnb_agcover_tests$cohens_d)
-rownames(cohen_d_ag_cover) <- dbt_agcover_tests$chemical
-colnames(cohen_d_ag_cover) <- c("dbt", "fp", "ihbb", "ihh", "ihl", "ihnb")
+rownames(cohen_d_agcover) <- dbt_agcover_tests$chemical
+colnames(cohen_d_agcover) <- c("dbt", "fp", "ihbb", "ihh", "ihl", "ihnb")
 # replace NAs with zeros
-cohen_d_ag_cover[is.na(cohen_d_ag_cover)] <- 0
+cohen_d_agcover[is.na(cohen_d_agcover)] <- 0
 
-library(circlize)
-library(devtools)
-install_github("jokergoo/ComplexHeatmap")
-library(ComplexHeatmap)
+
 col_fun = colorRamp2(c(-1, 0, 1), c("red", "white", "green"))
 col_fun(seq(-1, 1))
-Heatmap(cohen_d_ag_cover, name = "Cohen's d", col = col_fun)
+agcover_heatmap <- Heatmap(cohen_d_agcover, name = "Cohen's d", col = col_fun)
+agcover_heatmap
+
+# non parametric tests
+#View(cohen_d_agcover)
+# within each matrix type
+colnames(cohen_d_agcover)
+for(i in 1:6){
+  print(colnames(cohen_d_agcover)[i])
+  print(as.vector(unlist(cohen_d_agcover[which(cohen_d_agcover[,i]!=0),i])))
+  n_positive <- length(which(cohen_d_agcover[,i]>0))
+  n_total <- length(which(cohen_d_agcover[,i]!=0))
+  print(paste(n_positive, n_total))
+  print(binom.test(n_positive, n_total)) 
+}
+
+# for the entire matrix
+n_positive <- length(which(cohen_d_agcover>0))
+n_total <- length(which(cohen_d_agcover!=0))
+print(paste(n_positive, n_total)) 
+print(binom.test(n_positive, n_total))
+
+# an attempt at a hierarchical approach
+# does not work, not sure if it makes sense
+library(coin)
+class(cohen_d_agcover)
+cohen_d_agcover_skinny <- pivot_longer(as.data.frame(cohen_d_agcover), cols=1:6, names_to = "matrices")
+cohen_d_agcover_skinny$matrices <- as.factor(cohen_d_agcover_skinny$matrices)
+class(cohen_d_agcover_skinny)
+wilcoxsign_test(value ~ matrices, data=cohen_d_agcover_skinny)
