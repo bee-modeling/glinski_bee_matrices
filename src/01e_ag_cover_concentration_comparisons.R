@@ -227,6 +227,10 @@ colnames(cohen_d_agcover) <- c("dbt", "fp", "ihbb", "ihh", "ihl", "ihnb")
 # replace NAs with zeros
 cohen_d_agcover[is.na(cohen_d_agcover)] <- 0
 
+# write to file
+cohen_d_agcover_file <- paste(gbm_data_out,"/cohen_d_agcover.csv",sep="")
+write.csv(cohen_d_agcover, cohen_d_agcover_file)
+
 
 col_fun = colorRamp2(c(-1, 0, 1), c("red", "white", "green"))
 col_fun(seq(-1, 1))

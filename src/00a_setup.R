@@ -18,7 +18,7 @@ library(effsize)
 # hrbrthemes::import_roboto_condensed() #install required fonts if NA
 library(circlize)
 library(devtools)
-install_github("jokergoo/ComplexHeatmap")
+#install_github("jokergoo/ComplexHeatmap")
 library(ComplexHeatmap)
 
 print("list of loaded packages: ")
@@ -41,6 +41,7 @@ if(Sys.info()[4]=="DZ2626UTPURUCKE"){
 print(paste("Root directory location: ", gbm_root, sep=""))
 
 gbm_data_in <- file.path(gbm_root, "data_in")
+gbm_data_out <- file.path(gbm_root, "data_out")
 gbm_graphics <- file.path(gbm_root, "graphics")
 gbm_src <- file.path(gbm_root, "src")
 
