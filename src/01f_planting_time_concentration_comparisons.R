@@ -297,7 +297,8 @@ write.csv(cohen_d_plantdate, cohen_d_plantdate_file)
 
 col_fun = colorRamp2(c(-1, 0, 1), c("red", "white", "green"))
 col_fun(seq(-1, 1))
-date_compare_heatmap <- Heatmap(cohen_d_plantdate, name = "Cohen's d", col = col_fun)
+date_compare_heatmap <- Heatmap(cohen_d_plantdate, name = "Cohen's d", 
+                                col = col_fun, show_heatmap_legend = FALSE)
 date_compare_heatmap
 
 # non parametric tests
