@@ -91,6 +91,7 @@ all_df_test <- all_dfs[-which(rowSums(all_dfs)==0),]
 dim(all_df_test)
 all_df_test <- all_df_test + 0.001
 all_df_test$V1 > all_df_test$V2
+sum(all_df_test$V1 > all_df_test$V2)
 wilcox.test(all_df_test[,1], all_df_test[,2], paired=TRUE, alternative = c("greater"))
 #data:  all_df_test[, 1] and all_df_test[, 2]
 #V = 3879, p-value = 0.09047

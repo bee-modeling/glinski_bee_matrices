@@ -68,6 +68,11 @@ for(i in 7:35){
 }
 dbt_plantdate_tests
 
+# wilcox paired
+dbt_plantdate_tests$post_plant_mean - dbt_plantdate_tests$pre_plant_mean
+wilcox.test(dbt_plantdate_tests$pre_plant_mean, dbt_plantdate_tests$post_plant_mean, paired=TRUE, alternative = c("greater"))
+
+
 # FP 
 print("field pollen")
 gbm_data_concs_fp <- gbm_data_concs %>% filter(Media == "FP")
@@ -109,6 +114,10 @@ for(i in 7:35){
   }
 }
 fp_plantdate_tests
+
+# wilcox paired
+fp_plantdate_tests$post_plant_mean - fp_plantdate_tests$pre_plant_mean
+wilcox.test(fp_plantdate_tests$pre_plant_mean, fp_plantdate_tests$post_plant_mean, paired=TRUE, alternative = c("greater"))
 
 # IHBB 
 print("in hive bee bread")
@@ -152,6 +161,11 @@ for(i in 7:35){
 }
 ihbb_plantdate_tests
 
+# wilcox paired
+ihbb_plantdate_tests$post_plant_mean - ihbb_plantdate_tests$pre_plant_mean
+wilcox.test(ihbb_plantdate_tests$pre_plant_mean, ihbb_plantdate_tests$post_plant_mean, paired=TRUE, alternative = c("greater"))
+
+
 # IHH 
 print("in hive honey")
 gbm_data_concs_ihh <- gbm_data_concs %>% filter(Media == "IHH")
@@ -193,6 +207,11 @@ for(i in 7:35){
   }
 }
 ihh_plantdate_tests
+
+# wilcox paired
+ihh_plantdate_tests$post_plant_mean - ihh_plantdate_tests$pre_plant_mean
+wilcox.test(ihh_plantdate_tests$pre_plant_mean, ihh_plantdate_tests$post_plant_mean, paired=TRUE, alternative = c("greater"))
+
 
 # IHL 
 print("in hive larvae")
@@ -236,6 +255,11 @@ for(i in 7:35){
 }
 ihl_plantdate_tests
 
+# wilcox paired
+ihl_plantdate_tests$post_plant_mean - ihl_plantdate_tests$pre_plant_mean
+wilcox.test(ihl_plantdate_tests$pre_plant_mean, ihl_plantdate_tests$post_plant_mean, paired=TRUE, alternative = c("greater"))
+
+
 # IHNB
 print("in hive nurse bees")
 gbm_data_concs_ihnb <- gbm_data_concs %>% filter(Media == "IHNB")
@@ -278,6 +302,11 @@ for(i in 7:35){
 }
 ihnb_plantdate_tests
 
+# wilcox paired
+ihnb_plantdate_tests$post_plant_mean - ihnb_plantdate_tests$pre_plant_mean
+wilcox.test(ihnb_plantdate_tests$pre_plant_mean, ihnb_plantdate_tests$post_plant_mean, paired=TRUE, alternative = c("greater"))
+
+
 #create data frame with effects sizes by media and chemical
 cohen_d_plantdate <- cbind(dbt_plantdate_tests$cohens_d, 
                          fp_plantdate_tests$cohens_d, 
@@ -319,3 +348,12 @@ n_positive <- length(which(cohen_d_plantdate>0))
 n_total <- length(which(cohen_d_plantdate!=0))
 print(paste(n_positive, n_total)) 
 print(binom.test(n_positive, n_total))
+
+###
+# summary of tests for plant date
+dbt_plantdate_tests
+fp_plantdate_tests
+ihbb_plantdate_tests
+ihh_plantdate_tests
+ihl_plantdate_tests
+ihnb_plantdate_tests

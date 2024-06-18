@@ -264,3 +264,12 @@ cohen_d_agcover_skinny <- pivot_longer(as.data.frame(cohen_d_agcover), cols=1:6,
 cohen_d_agcover_skinny$matrices <- as.factor(cohen_d_agcover_skinny$matrices)
 class(cohen_d_agcover_skinny)
 wilcoxsign_test(value ~ matrices, data=cohen_d_agcover_skinny)
+
+###
+# summary of tests for ag cover
+dbt_agcover_tests
+fp_agcover_tests
+ihbb_agcover_tests
+ihh_agcover_tests
+ihl_agcover_tests
+ihnb_agcover_tests
