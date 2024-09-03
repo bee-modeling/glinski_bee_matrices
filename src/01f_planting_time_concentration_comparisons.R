@@ -318,6 +318,8 @@ rownames(cohen_d_plantdate) <- dbt_plantdate_tests$chemical
 colnames(cohen_d_plantdate) <- c("dbt", "fp", "ihbb", "ihh", "ihl", "ihnb")
 # replace NAs with zeros
 cohen_d_plantdate[is.na(cohen_d_plantdate)] <- 0
+colnames(cohen_d_plantdate)
+colnames(cohen_d_plantdate) <- c("DBT", "FP", "IHBB", "IHH", "IHL", "IHNB")
 
 # write to file
 cohen_d_plantdate_file <- paste(gbm_data_out,"/cohen_d_plantdate.csv",sep="")

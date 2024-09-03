@@ -69,6 +69,7 @@ gbm_concs_means <- gbm_concs_sum %>%
   group_by(Media, Date) %>% 
   summarize(mean_concs = mean(concs_sum))
 gbm_concs_means
+levels(gbm_concs_means$Media)
 hist(gbm_concs_means$Date)
 
 #wrong approach, convert as month-day
@@ -81,8 +82,11 @@ max(gbm_concs_means$mean_concs)
 # reorder Media factor to match text
 unique(gbm_concs_means$Media)
 levels(gbm_concs_means$Media)
+
+# factors are in the correct order but have p-values attached, rename
 new_media_types <- c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH")
-gbm_concs_means$Media <- factor(gbm_concs_means$Media, levels = new_media_types)
+levels(gbm_concs_means$Media) <- new_media_types
+#gbm_concs_means$Media <- factor(gbm_concs_means$Media, levels = new_media_types)
 levels(gbm_concs_means$Media)
 
 # Create the scatterplot
@@ -95,18 +99,23 @@ media_means_plot
 #scale_x_date(date_breaks = "1 week", date_labels = "%b %d") + # format x-axis as dates
 #facet_wrap(~Media, ncol = 3) # group by factor and wrap plots in a grid
 
+#View(gbm_concs_means)
 media_means_plot_log <- ggplot(gbm_concs_means, aes(x = Date2, y = log(mean_concs), group=Media, color = Media)) +
   geom_line() + # add points
-  labs(x = "Date", y = "log(Mean Concentration (ng/g))") +
   scale_x_date(date_breaks = "weeks" , date_labels = "%b-%d") +
+  scale_y_continuous(trans = "log", 
+                     breaks=log(c(4, 10, 50, 100, 200, 500, 1000)),
+                     labels=    c(4, 10, 40, 100, 200, 500, 1000))  +
+  labs(x = "Date", y = "Mean Concentration (ng/g)") +
   theme_classic()
 media_means_plot_log
 
 ### this is glinski figure 2 as of 12/11/2023
 gbm_media_means_filename <- paste(gbm_graphics,"/gbm_media_means.jpg",sep="")
 jpeg(gbm_media_means_filename, width = 7, height = 5, units = "in",res=600)
-  media_means_plot
+  media_means_plot_log
 dev.off()
 
 
 # time series test
+

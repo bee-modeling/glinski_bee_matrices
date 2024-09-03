@@ -128,3 +128,4 @@ ggplot(gbm_ndet_means, aes(x = Date, y = mean_ndets, color = Media)) +
   theme_classic()
   #scale_x_date(date_breaks = "1 week", date_labels = "%b %d") + # format x-axis as dates
   #facet_wrap(~Media, ncol = 3) # group by factor and wrap plots in a grid
+

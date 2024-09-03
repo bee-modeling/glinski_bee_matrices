@@ -40,12 +40,18 @@ min_proxy <- min(gbm_boxplot_data_agcover$value, na.rm=T)
 gbm_boxplot_data_agcover <- replace(gbm_boxplot_data_agcover, is.na(gbm_boxplot_data_agcover), min_proxy)
 
 # create boxplots on ag cover and media types
+levels(gbm_boxplot_data_agcover$ag_cover) <- c("High Ag", "Low Ag")
+levels(gbm_boxplot_data_agcover$Media)
+gbm_boxplot_data_agcover$Media <- factor(gbm_boxplot_data_agcover$Media, 
+                                         levels = c("FP", "DBT", "IHNB", "IHL", "IHBB", "IHH"))
+levels(gbm_boxplot_data_agcover$Media)
 boxplots_chem_classes_agcover <- ggplot(gbm_boxplot_data_agcover, aes(x = log(value), y=ag_cover, fill = Media)) + 
   geom_boxplot(position="dodge") +
   labs(y = "Media Type", x = "log(Mean Concentration (ng/g))", color = "Ag cover") +
-  facet_wrap(~pest_type, ncol=1) +# group by factor and wrap plots in a grid
+  scale_x_discrete(labels = c("High Ag", "Low Ag")) +
+  facet_wrap(~pest_type, ncol=1, scales='free') +# group by factor and wrap plots in a grid
   coord_flip() +
-  theme_classic() 
+  theme_classic()
 boxplots_chem_classes_agcover
 
 # save to graphics image

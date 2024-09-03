@@ -234,6 +234,8 @@ write.csv(cohen_d_agcover, cohen_d_agcover_file)
 
 col_fun = colorRamp2(c(-1, 0, 1), c("red", "white", "green"))
 col_fun(seq(-1, 1))
+colnames(cohen_d_agcover)
+colnames(cohen_d_agcover) <- c("DBT", "FP", "IHBB", "IHH", "IHL", "IHNB")
 agcover_heatmap <- Heatmap(cohen_d_agcover, name = "Cohen's d", col = col_fun)
 agcover_heatmap
 
